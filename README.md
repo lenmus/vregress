@@ -22,7 +22,7 @@ For running the tests it is necessary to have installed the [ImageMagick](http:/
 The test system also uses a small provided program (`lclt`) to open a test file, render it with Lomse and save the resulting images as JPG files. The `lclt` program is re-built as part of the visual regression test process, to ensure that the latest Lomse version is used. You only need to download the sources (they are rarely updated). It is **required** that lclt root and vregress root folders be placed in the same folder that Lomse root folder, e.g.:
 
 ```
-   my-projects
+   lomse-project
        │
        ├── lomse
        │     ├── src
@@ -62,21 +62,33 @@ $ ./build-lclt.sh       #builds the test program and links it with the new versi
 $ ./regression.sh       #runs the visual regression tests
 ```
 
-The `regression.sh` script will generate a lot of error messages. **It is normal!**. It creates a folder `lomse/zz_regression/` with the following content:
+The `regression.sh` script will generate a lot of error messages. **It is normal!**. It creates a folder `zz_regression` at the same level than the lomse root folder, with the following content:
+
 ```
-   lomse/
-     ├── src/
-     ├── scripts/
-     ┆
-     ├── zz_build_area/
-     └── zz_regression/
-              ├── generated/
-              ├── failures/
-              ├── regression.htm
-              └── regression.css
+   lomse-project
+       │
+       ├── lomse
+       │     ├── src
+       │     ├── scripts
+       │     ├── zz_build_area
+       │     ┆
+       │
+       ├── vregress
+       │     ├── target
+       │     ┆
+       │
+       ├── lclt
+       │     ├── src
+       │     ┆
+       ┆
+       └── zz_regression
+             ├── generated/
+             ├── failures/
+             ├── regression.htm
+             └── regression.css
 ```
 
-- Folder `zz_build_area/` is created by `build-lomse.sh` script and used by all other scripts.
+- Folder `lomse/zz_build_area/` is created by `build-lomse.sh` script and used by all other scripts.
 - Folder `zz_regression` is created by `regression.sh` script and contains results:
     - Subfolder `generated` contains the images for the rendered scores
     - Subfolder `failures` contains the GIF images for the test failures
@@ -87,9 +99,9 @@ The `regression.sh` script will generate a lot of error messages. **It is normal
 
 >    zz_*
 
-> to avoid inadvertently uploading the build and regression folders to the repo in a commit. Thank you!
+> to avoid inadvertently uploading the build folder to the repo in a commit. Thank you!
 
-Now, open the results page, in `lomse/zz_regression/regression.html`, with your favorite browser. And visually inspect the failures (there are links at page top). If you're happy with the new output you should copy the new blessed image from `lomse/zz_regression/generated` to `lomse/test-scores/regression/target` and commit it.
+Now, open the results page, in `zz_regression/regression.html`, with your favorite browser. And visually inspect the failures (there are links at page top). If you're happy with the new output you should copy the new blessed image from `zz_regression/generated` to `vregress/target` and commit it.
 
 
 
