@@ -1,0 +1,5 @@
+lomse_spacing_algorithm_gourlay.cpp, line 182. ERROR: [lomse::SpAlgGourlay::include_object] Investigate: un-expected staff object. Type= 65
+lomse_spacing_algorithm_gourlay.cpp, line 182. ERROR: [lomse::SpAlgGourlay::include_object] Investigate: un-expected staff object. Type= 65
+lomse_graphical_model.cpp, line 180. ERROR: [lomse::GraphicModel::add_to_map_imo_to_box] Duplicated Imo id 1. Existing Gmo: box-docpg-cont.. Adding Gmo: box-docpg-cont.
+lomse_graphical_model.cpp, line 180. ERROR: [lomse::GraphicModel::add_to_map_imo_to_box] Duplicated Imo id 2. Existing Gmo: box-score-page . Adding Gmo: box-score-page 
+lomse_interactor.cpp, line 176. INFO: [lomse::Interactor::create_graphic_model] gmodel build time = 127 ms.
