@@ -2,12 +2,24 @@
 
 The Lomse library has an extensive set of unit tests to make sure each core component of Lomse works properly. But they do not check that Lomse code, as a unit, works properly. So, Lomse also includes a visual regression test system for ensuring that Lomse works properly, that visual appearance of rendered scores doesn't change in unexpected ways from one Lomse build to the next one and, in general, to improve the quality assurance (QA) of the Lomse library. 
 
-The goal of this system is to detect regressions in the rendered output without having to rely on human visual review. The tests go as follows:
+The goal of this system is to detect regressions in the rendered output without having to rely on human visual review. There are two visual tests:
+- Rendition visual tests, and
+- MusicXML exporter visual tests.
+
+The Rendition visual tests go as follows:
 
 * First, Lomse loads a test score and renders it.
 * Then the generated image is compared with the expected blessed image that is in folder `lomse/test-scores/regression/target`.
 * If there are differences, the test script generates a GIF image, which flips between the two images, so that any differences are easily spotted.
 * Finally, an html page is automatically created with the results, in `lomse/zz_regression/results.html`.
+
+And the MusicXML exporter visual tests go as follows:
+
+* First, Lomse loads a test score and is exported to MusicXML.
+* The exported file is now imported and Lomse renders it. 
+* Then the generated image is compared with the expected blessed image that is in folder `lomse/test-scores/regression/target`.
+* If there are differences, the test script generates a GIF image, which flips between the two images, so that any differences are easily spotted.
+* Finally, an html page is automatically created with the results, in `lomse/zz_musicxml/musicxml.html`. Any failure means than the exported file does not contain all the information imported by Lomse from the original file and, thus, the rendition has differences.
 
 
 ## Running the visual tests
@@ -56,13 +68,14 @@ After you install ImageMagick and the lclt sources, you can run the test at any 
 ```
 $ cd path-to-my-projects-folder
 $ cd lomse/scripts
-$ ./build-lomse.sh      #builds Lomse and runs the unit tests
-$ ./install-lomse.sh    #install the new Lomse build. Asks for the root password to install lomse
-$ ./build-lclt.sh       #builds the test program and links it with the new version of Lomse. Install it.
-$ ./regression.sh       #runs the visual regression tests
+$ ./build-lomse.sh              #builds Lomse and runs the unit tests
+$ ./install-lomse.sh            #install the new Lomse build. Asks for the root password to install lomse
+$ ./build-lclt.sh               #builds the test program and links it with the new version of Lomse. Install it.
+$ ./regression.sh               #runs the visual regression tests
+$ ./musicxml-export-tests.sh    #runs the visual regression tests for the MusicXML exporter
 ```
 
-The `regression.sh` script will generate a lot of error messages. **It is normal!**. It creates a folder `zz_regression` at the same level than the lomse root folder, with the following content:
+The scripts `regression.sh` and `musicxml-export-tests.sh` will generate a lot of error messages. **It is normal!**. They create, respectively, folders `zz_regression` and `zz_musicxml`at the same level than the lomse root folder, with the following content:
 
 ```
    lomse-project
@@ -81,6 +94,12 @@ The `regression.sh` script will generate a lot of error messages. **It is normal
        │     ├── src
        │     ┆
        ┆
+       ├── zz_musicxml
+       │     ├── generated/
+       │     ├── failures/
+       │     ├── musicxml.htm
+       │     └── musicxml.css
+       │
        └── zz_regression
              ├── generated/
              ├── failures/
@@ -89,6 +108,13 @@ The `regression.sh` script will generate a lot of error messages. **It is normal
 ```
 
 - Folder `lomse/zz_build_area/` is created by `build-lomse.sh` script and used by all other scripts.
+
+- Folder `zz_musicxml` is created by `musicxml-export-tests.sh` script and contains results:
+    - Subfolder `generated` contains the images for the exported scores
+    - Subfolder `failures` contains the GIF images for the test failures
+    - File `musicxml.htm` is an HTML page the test report.
+    - File `musicxml.css` is a style sheet for the report.
+
 - Folder `zz_regression` is created by `regression.sh` script and contains results:
     - Subfolder `generated` contains the images for the rendered scores
     - Subfolder `failures` contains the GIF images for the test failures
@@ -99,9 +125,11 @@ The `regression.sh` script will generate a lot of error messages. **It is normal
 
 >    zz_*
 
-> to avoid inadvertently uploading the build folder to the repo in a commit. Thank you!
+> to avoid inadvertently uploading the build folders to the repo in a commit. Thank you!
 
 Now, open the results page, in `zz_regression/regression.html`, with your favorite browser. And visually inspect the failures (there are links at page top). If you're happy with the new output you should copy the new blessed image from `zz_regression/generated` to `vregress/target` and commit it.
+
+Also open the results page, in `zz_musicxml/musicxml.html` and visually inspect the failures. Any failure means than the exported file does not contain all the information imported by Lomse from the original file and, thus, the rendition has differences. You should open an issue to inverstigate and fix the MusicXML exporter.
 
 
 
