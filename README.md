@@ -9,7 +9,7 @@ The goal of this system is to detect regressions in the rendered output without 
 The Rendition visual tests go as follows:
 
 * First, Lomse loads a test score and renders it.
-* Then the generated image is compared with the expected blessed image that is in folder `lomse/test-scores/regression/target`.
+* Then the generated image is compared with the expected blessed image that is in folder `lomse/vregress/target`.
 * If there are differences, the test script generates a GIF image, which flips between the two images, so that any differences are easily spotted.
 * Finally, an html page is automatically created with the results, in `lomse/zz_regression/results.html`.
 
@@ -17,7 +17,7 @@ And the MusicXML exporter visual tests go as follows:
 
 * First, Lomse loads a test score and is exported to MusicXML.
 * The exported file is now imported and Lomse renders it. 
-* Then the generated image is compared with the expected blessed image that is in folder `lomse/test-scores/regression/target`.
+* Then the generated image is compared with the expected blessed image that is in folder `lomse/vregress/target`.
 * If there are differences, the test script generates a GIF image, which flips between the two images, so that any differences are easily spotted.
 * Finally, an html page is automatically created with the results, in `lomse/zz_musicxml/musicxml.html`. Any failure means than the exported file does not contain all the information imported by Lomse from the original file and, thus, the rendition has differences.
 
@@ -106,8 +106,6 @@ The scripts `regression.sh` and `musicxml-export-tests.sh` will generate a lot o
              ├── regression.htm
              └── regression.css
 ```
-
-- Folder `lomse/zz_build_area/` is created by `build-lomse.sh` script and used by all other scripts.
 
 - Folder `zz_musicxml` is created by `musicxml-export-tests.sh` script and contains results:
     - Subfolder `generated` contains the images for the exported scores
